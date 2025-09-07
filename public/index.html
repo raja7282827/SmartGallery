@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MySite - Modern Homepage</title>
+  <style>
+    /* ---------------- Body ---------------- */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e766c1, #c3cfe2);
+      transition: background 0.5s ease;
+    }
+
+    /* ---------------- Navbar ---------------- */
+    .navbar {
+      background: linear-gradient(to right, #be0a82, #ff5c7c);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .navbar:hover {
+      background: linear-gradient(to right, #ff5c7c, #be0a82);
+      cursor: pointer;
+    }
+
+    .navbar h1 {
+      color: white;
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: 1px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+      cursor: default;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar li {
+      margin-left: 25px;
+      position: relative;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* ---------------- Content ---------------- */
+    .content {
+      padding: 60px 20px;
+      text-align: center;
+      color: #333;
+      animation: fadeIn 1s ease;
+    }
+
+    .content h2 {
+      font-size: 36px;
+      margin-bottom: 15px;
+      color: #be0a82;
+    }
+
+    .content p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      background: #be0a82;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+      background: #ff5c7c;
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ---------------- Popup ---------------- */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.5s ease;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      width: 320px;
+      text-align: center;
+      position: relative;
+      transform: scale(0.7);
+      animation: popupShow 0.3s forwards;
+    }
+
+    .popup-content input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    .popup-content input:focus {
+      border-color: #be0a82;
+      box-shadow: 0 0 5px #be0a82;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: #be0a82;
+      transition: 0.3s ease;
+    }
+
+    .close-btn:hover {
+      color: #ff5c7c;
+      transform: scale(1.2);
+    }
+
+    /* ---------------- Animations ---------------- */
+    @keyframes fadeIn {
+      from {opacity:0;}
+      to {opacity:1;}
+    }
+
+    @keyframes popupShow {
+      to {transform: scale(1);}
+    }
+    /* Enhanced Slider */
+    .slider {
+      width: 300px;
+      height: 200px;
+      perspective: 1000px;
+      position: relative;
+      margin: 2rem auto;
+    }
+
+    .carousel {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transform-style: preserve-3d;
+      animation: rotate 20s infinite linear;
+      transition: animation-play-state 0.3s ease;
+    }
+
+    .slider:hover .carousel {
+      animation-play-state: paused;
+    }
+
+    .carousel img {
+      position: absolute;
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 3px solid transparent;
+    }
+
+    .carousel img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border-color: rgba(255, 255, 255, 0.5);
+      filter: brightness(1.2) contrast(1.1);
+    }
+
+    /* Positioning each image around the Y-axis */
+    .carousel img:nth-child(1) { transform: rotateY(0deg) translateZ(400px); }
+    .carousel img:nth-child(2) { transform: rotateY(60deg) translateZ(400px); }
+    .carousel img:nth-child(3) { transform: rotateY(120deg) translateZ(400px); }
+    .carousel img:nth-child(4) { transform: rotateY(180deg) translateZ(400px); }
+    .carousel img:nth-child(5) { transform: rotateY(240deg) translateZ(400px); }
+    .carousel img:nth-child(6) { transform: rotateY(300deg) translateZ(400px); }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    /* Control buttons */
+    .controls {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .control-btn {
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .control-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .control-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .nav-links {
+        gap: 1rem;
+      }
+      
+      .title {
+        font-size: 2rem;
+      }
+      
+      .slider {
+        width: 250px;
+        height: 170px;
+      }
+      
+      .carousel img {
+        width: 250px;
+        height: 170px;
+      }
+      
+      .carousel img:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+      .carousel img:nth-child(2) { transform: rotateY(60deg) translateZ(300px); }
+      .carousel img:nth-child(3) { transform: rotateY(120deg) translateZ(300px); }
+      .carousel img:nth-child(4) { transform: rotateY(180deg) translateZ(300px); }
+      .carousel img:nth-child(5) { transform: rotateY(240deg) translateZ(300px); }
+      .carousel img:nth-child(6) { transform: rotateY(300deg) translateZ(300px); }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 1rem;
+      }
+      
+      .nav-links {
+        gap: 0.5rem;
+      }
+      
+      .nav-links a {
+        font-size: 0.9rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
+    /* Full height layout setup */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main container to push footer to bottom */
+.page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure main content grows to push footer down */
+.content, .slider, .controls {
+  flex-grow: 1;
+}
+
+/* Stylish Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right, #be0a82, #ff5c7c);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1>SmartGallery</h1>
+    <ul>
+      <li><a id="homeLink">Home</a></li>
+      <li><a id="signupLink">Signup</a></li>
+      <li><a id="loginLink">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="content" id="mainContent">
+    <h2>Welcome to  SmartGallery</h2>
+    <p>Click on Home, Signup, or Login in the navbar.</p>
+  </div>
+   <div class="slider">
+        <div class="carousel" id="carousel">
+          <img src="./images/flower7.jpg" alt="Image 1">
+          <img src="./images/flower3.jpg" alt="Image 2">
+          <img src="./images/flower4.jpg" alt="Image 3">
+          <img src="./images/flower5.jpg" alt="Image 4">
+          <img src="./images/flower6.jpg" alt="Image 5">
+          <img src="./images/flower8.jpg" alt="Image 6">
+        </div>
+      </div>
+      <div class="controls">
+        <button class="control-btn" onclick="changeSpeed('slow')">Slow</button>
+        <button class="control-btn" onclick="changeSpeed('normal')">Normal</button>
+        <button class="control-btn" onclick="changeSpeed('fast')">Fast</button>
+      </div>
+    </div>
+  </div>
+ 
+
+  <!-- Signup Popup -->
+  <div class="popup" id="signupPopup">
+    <div class="popup-content">
+      <span class="close-btn" id="closeSignup">&times;</span>
+      <h2>Signup</h2>
+      <input type="text" placeholder="Name"><br>
+      <input type="email" placeholder="Email"><br>
+      <input type="password" placeholder="Password"><br>
+      <button>Signup</button>
+    </div>
+  </div>
+
+  <!-- Login Popup -->
+  <div class="popup" id="loginPopup">
+    <div class="popup-content">
+      <span class="close-btn" id="closeLogin">&times;</span>
+      <h2>Login</h2>
+      <input type="email" placeholder="Email"><br>
+      <input type="password" placeholder="Password"><br>
+      <button>Login</button>
+    </div>
+  </div>
+  <footer style="background: linear-gradient(to right, #be0a82, #ff5c7c); color: white; padding: 30px; text-align: center;">
+  <p>🌸 Beauty captured in pixels | MyGallery 2025 🌸</p>
+  <p>Designed with creativity & passion.</p>
+</footer>
+
+
+  <script>
+    // ---------------- Popup Logic ----------------
+    const signupPopup = document.getElementById("signupPopup");
+    const loginPopup = document.getElementById("loginPopup");
+    const closeSignup = document.getElementById("closeSignup");
+    const closeLogin = document.getElementById("closeLogin");
+
+    document.getElementById("signupLink").addEventListener("click", () => {
+      signupPopup.style.display = "flex";
+    });
+    document.getElementById("loginLink").addEventListener("click", () => {
+      loginPopup.style.display = "flex";
+    });
+    closeSignup.addEventListener("click", () => {
+      signupPopup.style.display = "none";
+    });
+    closeLogin.addEventListener("click", () => {
+      loginPopup.style.display = "none";
+    });
+    window.addEventListener("click", (e) => {
+      if (e.target === signupPopup) signupPopup.style.display = "none";
+      if (e.target === loginPopup) loginPopup.style.display = "none";
+    });
+
+    // ---------------- Home Logic ----------------
+    document.getElementById("homeLink").addEventListener("click", () => {
+      document.getElementById("mainContent").innerHTML = `
+        <h2>Welcome to MySite</h2>
+        <p>This is the Home Page.</p>
+      `;
+    });
+
+    // ---------------- Signup API ----------------
+    document.querySelector("#signupPopup button").addEventListener("click", async () => {
+      const inputs = document.querySelectorAll("#signupPopup input");
+      const username = inputs[0].value;
+      const email = inputs[1].value;
+      const password = inputs[2].value;
+
+      const res = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert("Signup successful! Please login.");
+        signupPopup.style.display = "none";
+        loginPopup.style.display = "block";
+      } else {
+        alert(data.message || data.error);
+      }
+    });
+
+    // ---------------- Login API ----------------
+    document.querySelector("#loginPopup button").addEventListener("click", async () => {
+      const inputs = document.querySelectorAll("#loginPopup input");
+      const email = inputs[0].value;
+      const password = inputs[1].value;
+
+      const res = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (data.success && data.token) {
+        localStorage.setItem("token", data.token);
+        alert("Login successful!");
+        window.location.href = "gallery.html"; // redirect to gallery
+      } else {
+        alert(data.message || data.error);
+      }
+    });
+     function changeSpeed(speed) {
+      const carousel = document.getElementById('carousel');
+      carousel.style.animationDuration = speed === 'slow' ? '30s' : 
+                                        speed === 'fast' ? '10s' : '20s';
+    }
+
+    // Add click event to images for fullscreen effect
+    document.querySelectorAll('.carousel img').forEach(img => {
+      img.addEventListener('click', function() {
+        // Create fullscreen overlay
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.9);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+          cursor: pointer;
+          backdrop-filter: blur(10px);
+        `;
+        
+        const fullImg = document.createElement('img');
+        fullImg.src = this.src;
+        fullImg.style.cssText = `
+          max-width: 90%;
+          max-height: 90%;
+          border-radius: 15px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+          animation: zoomIn 0.3s ease;
+        `;
+        
+        // Add zoom animation
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        overlay.appendChild(fullImg);
+        document.body.appendChild(overlay);
+        
+        // Remove overlay on click
+        overlay.addEventListener('click', () => {
+          document.body.removeChild(overlay);
+          document.head.removeChild(style);
+        });
+      });
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Add navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(0, 0, 0, 0.3)';
+      } else {
+        navbar.style.background = 'rgba(0, 0, 0, 0.1)';
+      }
+    });
+  </script>
+</body>
+</html>
